@@ -9,5 +9,17 @@ export function getYoutubeId(value) {
 }
 
 export function youtubeEmbedUrl(id) {
-  return `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1`;
+  const params = new URLSearchParams({
+    rel: "0",
+    modestbranding: "1",
+    playsinline: "1",
+  });
+  if (typeof window !== "undefined" && window.location?.origin) {
+    params.set("origin", window.location.origin);
+  }
+  return `https://www.youtube.com/embed/${id}?${params.toString()}`;
+}
+
+export function youtubeWatchUrl(id) {
+  return `https://www.youtube.com/watch?v=${id}`;
 }

@@ -6,7 +6,7 @@ export const PROGRAMS = [
     minutes: 3,
     cue: "四肢著地，吸氣時肚臍下沉、胸口打開；吐氣時背部拱起、下巴內收。",
     errors: ["肩膀聳起", "手肘鎖死", "頸部過度後仰"],
-    youtubeId: "kqnua4FtH-8",
+    youtubeId: "y39PrKY_4JM",
   },
   {
     slug: "bird-dog",
@@ -24,7 +24,7 @@ export const PROGRAMS = [
     minutes: 3,
     cue: "仰躺、腳跟靠近臀部，用臀腿把髖推起成一直線，頂端停一秒再放下。",
     errors: ["過度挺腰", "膝蓋內夾", "用腰發力"],
-    youtubeId: "OQat3aFPyXc",
+    youtubeId: "ugbRWDwEnYU",
   },
   {
     slug: "dead-bug",
@@ -42,7 +42,7 @@ export const PROGRAMS = [
     minutes: 3,
     cue: "背貼牆慢慢下滑到大腿接近水平，膝蓋與腳尖同向，重量在腳跟。",
     errors: ["膝蓋內夾", "腳跟離地", "腰離開牆面"],
-    youtubeId: "y-wV4GunzsQ",
+    youtubeId: "aKBxiKs9n8A",
   },
 ];
 

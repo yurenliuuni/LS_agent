@@ -44,6 +44,18 @@ export function addRecord(record) {
   return saveState({ records: [record, ...state.records].slice(0, 60) });
 }
 
+export function deleteSession(id) {
+  const state = loadState();
+  return saveState({
+    sessions: state.sessions.filter((item) => item.id !== id),
+    records: state.records.filter((item) => item.id !== id),
+  });
+}
+
+export function clearSessions() {
+  return saveState({ sessions: [], records: [] });
+}
+
 export function statsFrom(state = loadState()) {
   const sessions = state.sessions ?? [];
   const avg =

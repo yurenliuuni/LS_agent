@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { detectPose, drawPose, warmupPose } from "../lib/pose.js";
 import { scoreExercise } from "../lib/coach.js";
 import { addRecord, addSession } from "../lib/store.js";
-import { youtubeEmbedUrl } from "../lib/youtube.js";
+import YoutubeEmbed from "./YoutubeEmbed.jsx";
 
 export default function PoseSession({ slug, title, cue, youtubeId }) {
   const videoRef = useRef(null);
@@ -60,7 +60,11 @@ export default function PoseSession({ slug, title, cue, youtubeId }) {
   const start = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "user", width: { ideal: 1280 }, height: { ideal: 720 } },
+        video: {
+          facingMode: "user",
+          width: { min: 640, ideal: 1920 },
+          height: { min: 480, ideal: 1080 },
+        },
         audio: false,
       });
       videoRef.current.srcObject = stream;
@@ -118,17 +122,15 @@ export default function PoseSession({ slug, title, cue, youtubeId }) {
       <div className="stage">
         <video ref={videoRef} playsInline muted />
         <canvas ref={canvasRef} />
-        {!live ? <div className="stage-empty">鏡頭尚未開啟</div> : null}
+        <div className="stage-guide" aria-hidden="true" />
+        {!live ? (
+          <div className="stage-empty">
+            把鏡頭拉遠，讓頭到腳都在虛線框裡。畫面不會再裁切身體。
+          </div>
+        ) : null}
       </div>
       <aside className="analysis">
-        {youtubeId ? (
-          <iframe
-            title="coach video"
-            src={youtubeEmbedUrl(youtubeId)}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        ) : null}
+        <YoutubeEmbed videoId={youtubeId} title={title} />
         <p className="live-title">
           <i className={live ? "live-dot" : "ready-dot"} />
           {status}

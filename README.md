@@ -4,17 +4,20 @@
 
 Web MVP：指定下背修復動作 + 鏡頭即時骨架評分 + YouTube 跟練 + 每日紀錄 + 俱樂部。姿勢分析在瀏覽器內跑（MediaPipe），不需要 GPU 伺服器。
 
-## 上線（GitHub Pages）
+## 建議：開一個全新 GitHub repo
 
-目前 token 沒有 `workflow` 權限，無法直接寫入 `.github/workflows`。
+`LS_v0` 的 `master` 與這份產品是兩條不相干的 git 歷史，不必硬比。請建一個**空的**新 repo（不要勾 README / .gitignore / license），例如 `linkspace`，然後把 URL 貼回來，我推上 `main`。
 
-請你做這三件事（約 2 分鐘）：
+建立 Fine-grained 或 classic PAT 時請一次給齊：
 
-1. GitHub repo **Settings → Pages → Source** 選 **GitHub Actions**
-2. 把 `docs/pages.workflow.yml` 複製成 `.github/workflows/pages.yml` 後 commit 到 `master`（或把 token 加上 `workflow` scope 再跟我說一聲）
-3. 合併 `ship-web-mvp` 進 `master`
+| 權限 | 為什麼需要 |
+| --- | --- |
+| `contents: write` | 推程式 |
+| `workflows: write` | 寫 GitHub Actions 才能自動上線 |
+| `pages: write` | 部署 GitHub Pages |
+| `pull-requests: write` | 開 PR（可選） |
 
-請用 **HTTPS 桌面瀏覽器**，允許相機，並讓頭、軀幹、膝蓋都入鏡。
+Repo **Settings → Pages → Source** 選 **GitHub Actions**。
 
 ## 本機前端
 
@@ -24,7 +27,7 @@ npm install
 npm run dev
 ```
 
-開啟 http://localhost:5173
+開啟 http://localhost:5173 。請允許相機；鏡頭會顯示**完整畫面**（不裁切），請把電腦放遠直到頭到腳都在虛線框內。
 
 ## 本機後端（帳號／排行榜，可選）
 
