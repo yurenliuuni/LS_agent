@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.svg";
+import GestureCards from "../components/GestureCards.jsx";
 import ProgramCard from "../components/ProgramCard.jsx";
 import {
   CATEGORIES,
@@ -26,6 +27,7 @@ export default function Home() {
         <p className="eyebrow">{t("home.eyebrow")}</p>
         <h1>{t("home.title")}</h1>
         <p className="lede">{t("home.lede")}</p>
+        <GestureCards />
         <div className="cta-row">
           <Link className="btn" to="/guide">
             {t("home.guide")}
