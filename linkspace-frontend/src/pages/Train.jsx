@@ -1,9 +1,12 @@
 import { Link, useParams } from "react-router-dom";
+import ProgramCard from "../components/ProgramCard.jsx";
 import Trainer from "../components/Trainer.jsx";
-import { CATEGORIES, findProgram } from "../data/programs.js";
+import { CATEGORIES, categoryName, findProgram } from "../data/programs.js";
+import { useI18n, videoTitle } from "../lib/i18n.jsx";
 
 export default function Train() {
   const { slug } = useParams();
+  const { t, lang } = useI18n();
   const selected = slug ? findProgram(slug) : null;
 
   if (!selected) {
@@ -11,21 +14,18 @@ export default function Train() {
       <main>
         <section className="panel">
           <div className="panel-head">
-            <h2>Pamela Reif</h2>
-            <p>Workouts grouped by type. Open one to split the screen with your mirror.</p>
+            <h2>{t("train.title")}</h2>
+            <p>{t("train.lede")}</p>
           </div>
         </section>
         {CATEGORIES.map((category) => (
           <section className="panel" key={category.slug}>
             <div className="panel-head">
-              <h2>{category.name}</h2>
+              <h2>{categoryName(category, lang, t)}</h2>
             </div>
             <div className="program-grid">
               {category.videos.map((item) => (
-                <Link key={item.slug} className="program-card" to={`/train/${item.slug}`}>
-                  <span className="mins">{item.minutes} min</span>
-                  <h3>{item.title}</h3>
-                </Link>
+                <ProgramCard key={item.slug} item={item} lang={lang} />
               ))}
             </div>
           </section>
@@ -37,11 +37,11 @@ export default function Train() {
   return (
     <main className="wide">
       <p className="crumb">
-        <Link to="/train">Train</Link> / {selected.title}
+        <Link to="/train">{t("train.crumb")}</Link> / {videoTitle(selected, lang)}
       </p>
       <Trainer
         slug={selected.slug}
-        title={selected.title}
+        title={videoTitle(selected, lang)}
         youtubeId={selected.youtubeId}
         defaultLayout={selected.defaultLayout}
       />

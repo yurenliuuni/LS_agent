@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import YoutubePlayer from "./YoutubePlayer.jsx";
+import { useI18n } from "../lib/i18n.jsx";
 import { addSession } from "../lib/store.js";
 import { detectGesture, warmupGestures } from "../lib/gestures.js";
 
 const LAYOUT_KEY = "linksparks.layout";
 
 export default function Trainer({ slug, title, youtubeId, defaultLayout = "standing" }) {
+  const { t } = useI18n();
   const videoRef = useRef(null);
   const playerRef = useRef(null);
   const rafRef = useRef(0);
@@ -13,7 +15,7 @@ export default function Trainer({ slug, title, youtubeId, defaultLayout = "stand
   const cooldownRef = useRef(0);
   const [layout, setLayout] = useState(defaultLayout);
   const [live, setLive] = useState(false);
-  const [status, setStatus] = useState("Camera off");
+  const [statusKey, setStatusKey] = useState("trainer.cameraOff");
   const [gesture, setGesture] = useState("");
   const [startedAt, setStartedAt] = useState(null);
 
@@ -23,7 +25,7 @@ export default function Trainer({ slug, title, youtubeId, defaultLayout = "stand
 
   useEffect(() => {
     warmupGestures().catch(() => {
-      setStatus("Gestures need the camera and a network connection.");
+      setStatusKey("trainer.gestureNet");
     });
     startCamera();
     return () => teardown(false);
@@ -52,13 +54,17 @@ export default function Trainer({ slug, title, youtubeId, defaultLayout = "stand
     setGesture(next);
     if (next === "pause") {
       player?.pauseVideo?.();
-      setStatus("Paused");
+      setStatusKey("trainer.paused");
     } else if (next === "play") {
       player?.playVideo?.();
-      setStatus("Playing");
+      setStatusKey("trainer.playing");
     } else if (next === "switch") {
       setLayout((value) => (value === "standing" ? "mat" : "standing"));
-      setStatus("Layout switched");
+      setStatusKey("trainer.switched");
+    } else if (next === "rewind") {
+      const current = player?.getCurrentTime?.() ?? 0;
+      player?.seekTo?.(Math.max(0, current - 10), true);
+      setStatusKey("trainer.rewound");
     }
   };
 
@@ -83,10 +89,10 @@ export default function Trainer({ slug, title, youtubeId, defaultLayout = "stand
       liveRef.current = true;
       setLive(true);
       setStartedAt(Date.now());
-      setStatus("Mirror on");
+      setStatusKey("trainer.mirrorOn");
       rafRef.current = requestAnimationFrame(loop);
     } catch {
-      setStatus("Allow the camera to use the mirror.");
+      setStatusKey("trainer.cameraNeed");
     }
   };
 
@@ -117,37 +123,40 @@ export default function Trainer({ slug, title, youtubeId, defaultLayout = "stand
             className={layout === "standing" ? "selected" : ""}
             onClick={() => setLayout("standing")}
           >
-            Standing · left / right
+            {t("trainer.standing")}
           </button>
           <button
             type="button"
             className={layout === "mat" ? "selected" : ""}
             onClick={() => setLayout("mat")}
           >
-            Mat · top / bottom
+            {t("trainer.mat")}
           </button>
         </div>
         <p className="gesture-legend">
-          Open palm pause · thumbs up play · peace switch layout
-          {gesture ? ` · last: ${gesture}` : ""}
+          {t("trainer.legend")}
+          {gesture ? ` · ${t("trainer.last", { g: t(`gesture.${gesture}`) })}` : ""}
         </p>
         <p className="live-title">
           <i className={live ? "live-dot" : "ready-dot"} />
-          {status}
+          {t(statusKey)}
         </p>
+        <button className="btn slim ghost" type="button" onClick={() => applyGesture("rewind")}>
+          {t("gesture.rewind")}
+        </button>
         <button className="btn slim" type="button" onClick={() => teardown(true)}>
-          End session
+          {t("trainer.end")}
         </button>
       </div>
       <div className={`split ${layout}`}>
         <div className="pane mirror">
           <video ref={videoRef} playsInline muted autoPlay />
-          {!live ? <div className="pane-empty">Mirror</div> : null}
-          <span className="pane-label">You</span>
+          {!live ? <div className="pane-empty">{t("trainer.mirror")}</div> : null}
+          <span className="pane-label">{t("trainer.you")}</span>
         </div>
         <div className="pane coach">
           <YoutubePlayer videoId={youtubeId} playerRef={playerRef} title={title} />
-          <span className="pane-label">Pamela</span>
+          <span className="pane-label">{t("trainer.coach")}</span>
         </div>
       </div>
     </section>

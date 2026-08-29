@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import { useI18n } from "../lib/i18n.jsx";
 import { loadYoutubeApi, youtubeThumb, youtubeWatchUrl } from "../lib/youtube.js";
 
 export default function YoutubePlayer({ videoId, playerRef, title }) {
+  const { t } = useI18n();
   const boxRef = useRef(null);
   const instanceRef = useRef(null);
   const [blocked, setBlocked] = useState(false);
@@ -51,11 +53,11 @@ export default function YoutubePlayer({ videoId, playerRef, title }) {
     return (
       <div className="yt-blocked">
         <img src={youtubeThumb(videoId)} alt="" />
-        <p>YouTube blocked embedding for this video.</p>
+        <p>{t("yt.blocked")}</p>
         <a className="btn" href={youtubeWatchUrl(videoId)} target="_blank" rel="noreferrer">
-          Open {title || "this workout"} on YouTube
+          {t("yt.open", { title: title || t("yt.fallback") })}
         </a>
-        <p className="hint">Use a Pamela session from Train — those are checked for embed.</p>
+        <p className="hint">{t("yt.hint")}</p>
       </div>
     );
   }

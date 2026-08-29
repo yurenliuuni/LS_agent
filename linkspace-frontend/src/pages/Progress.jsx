@@ -1,32 +1,39 @@
 import { useState } from "react";
+import { useI18n } from "../lib/i18n.jsx";
 import { clearSessions, deleteSession, loadState, statsFrom } from "../lib/store.js";
 
 export default function Progress() {
+  const { t, lang } = useI18n();
   const [state, setState] = useState(loadState());
   const stats = statsFrom(state);
+  const locale = lang === "zh" ? "zh-Hant" : "en-US";
 
   return (
     <main className="panel">
       <div className="panel-head">
-        <h2>History</h2>
+        <h2>{t("progress.title")}</h2>
         <p>
-          {stats.count} sessions, {stats.minutes} minutes, {stats.streak} day streak.
+          {t("progress.summary", {
+            count: stats.count,
+            minutes: stats.minutes,
+            streak: stats.streak,
+          })}
         </p>
         {state.sessions.length > 0 ? (
           <button className="btn ghost" type="button" onClick={() => setState(clearSessions())}>
-            Clear all
+            {t("progress.clear")}
           </button>
         ) : null}
       </div>
       {state.sessions.length === 0 ? (
-        <p className="empty">No sessions yet.</p>
+        <p className="empty">{t("progress.empty")}</p>
       ) : (
         <ol className="session-list">
           {state.sessions.map((item) => (
             <li key={item.id}>
               <div>
                 <strong>{item.title}</strong>
-                <span>{new Date(item.endedAt).toLocaleString()}</span>
+                <span>{new Date(item.endedAt).toLocaleString(locale)}</span>
               </div>
               <div className="session-actions">
                 <b>{Math.round((item.durationSeconds || 0) / 60)} min</b>
@@ -35,7 +42,7 @@ export default function Progress() {
                   type="button"
                   onClick={() => setState(deleteSession(item.id))}
                 >
-                  Delete
+                  {t("progress.delete")}
                 </button>
               </div>
             </li>

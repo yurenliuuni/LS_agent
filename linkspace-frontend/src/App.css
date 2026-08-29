@@ -199,6 +199,36 @@
   font-weight: 650;
 }
 
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.lang-toggle {
+  display: flex;
+  gap: 4px;
+  background: #fff;
+  border-radius: 999px;
+  padding: 3px;
+  border: 1px solid #cfe3ec;
+}
+
+.lang-toggle button {
+  border: 0;
+  background: transparent;
+  border-radius: 999px;
+  padding: 6px 10px;
+  color: #3d5a6c;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.lang-toggle .selected {
+  background: #0e2433;
+  color: #f4fafc;
+}
+
 .user-chip {
   display: flex;
   flex-direction: column;
@@ -242,9 +272,24 @@ main {
 .lede,
 .panel-head p,
 .cue,
-.empty {
+.empty,
+.about-copy p,
+.about-list {
   color: #3d5a6c;
   line-height: 1.6;
+}
+
+.about-copy p {
+  line-height: 1.7;
+}
+
+.about-list {
+  margin: 12px 0 0;
+  padding-left: 1.2em;
+}
+
+.about-list li + li {
+  margin-top: 8px;
 }
 
 .cta-row,
@@ -253,6 +298,67 @@ main {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
+}
+
+.gesture-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin: 8px 0 28px;
+  text-align: left;
+}
+
+.gesture-card {
+  background: #fff;
+  border: 1px solid #d7e7ef;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.gesture-icon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 10px;
+  border-radius: 14px;
+  background: #e8f4f8;
+  color: #1f6f86;
+}
+
+.gesture-icon svg {
+  width: 40px;
+  height: 40px;
+}
+
+.gesture-card h3 {
+  margin: 0 0 6px;
+  font-size: 16px;
+}
+
+.gesture-card p {
+  margin: 0;
+  color: #3d5a6c;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.site-footer {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 8px 24px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #5b7b8c;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.site-footer a {
+  color: #1f6f86;
+  font-weight: 650;
+  text-decoration: none;
 }
 
 .stat-row {
@@ -307,6 +413,42 @@ main {
   border: 1px solid #cfe3ec;
   border-radius: 22px;
   padding: 28px;
+  margin-top: 20px;
+}
+
+.now-panel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.collection-card {
+  background: #fff;
+  border: 1px solid #d7e7ef;
+  border-radius: 16px;
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.collection-card h3 {
+  margin: 8px 0 8px;
+}
+
+.collection-card p {
+  margin: 0;
+  color: #3d5a6c;
+  line-height: 1.55;
+  font-size: 14px;
 }
 
 .panel-head h2,
