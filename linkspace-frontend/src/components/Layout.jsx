@@ -52,7 +52,6 @@ export default function Layout() {
       <Outlet />
       <footer className="site-footer">
         <NavLink to="/about">{t("about.title")}</NavLink>
-        <span>{t("about.p1")}</span>
       </footer>
     </div>
   );

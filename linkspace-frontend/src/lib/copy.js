@@ -114,7 +114,7 @@ export const copy = {
     trainer: {
       standing: "Standing · left / right",
       mat: "Mat · top / bottom",
-      legend: "Open palm pause · thumbs up play · peace switch layout · thumbs down rewind 10s",
+      legend: "Open palm pause · thumbs up play · peace switch layout · thumbs down or point up rewind 10s",
       last: "last: {g}",
       end: "End session",
       you: "You",
@@ -145,7 +145,7 @@ export const copy = {
       switchName: "Switch layout",
       switchHow: "Peace sign (index and middle finger). Standing is left / right; mat is coach on top, you below.",
       rewindName: "Rewind 10 seconds",
-      rewindHow: "Thumbs down. The video jumps back ten seconds.",
+      rewindHow: "Thumbs down or point up. The video jumps back ten seconds.",
       tipTitle: "Tips",
       tip1: "Allow the camera when the browser asks. The mirror stays on this device.",
       tip2: "One hand at a time works more reliably than two.",
@@ -153,9 +153,9 @@ export const copy = {
     },
     about: {
       title: "About this site",
-      p1: "This is a small tool Rain Liu made from a habit of following Pamela Reif workout videos.",
-      p2: "It is fully open source and not for profit. There is no paywall, no ads, and no claim to Pamela’s work.",
-      p3: "Every workout in the catalog is Pamela Reif’s teaching material on YouTube. This site only embeds those videos so you can train with a mirror on one side and the coach on the other.",
+      p1: "This is a small tool Rain Liu made because he likes watching Pamela Reif workout videos.",
+      p2: "It is fully open source and not for profit.",
+      p3: "Every video here is Pamela’s teaching material on YouTube.",
       p4: "Not affiliated with Pamela Reif. If you enjoy the sessions, support her on YouTube.",
     },
     yt: {
@@ -181,7 +181,7 @@ export const copy = {
     home: {
       eyebrow: "linksparks",
       title: "跟 Pamela 一起練",
-      lede: "手勢可暫停、播放、切換版面、倒帶 10 秒。",
+      lede: "手勢可暫停、播放、切換版面、倒帶10秒。",
       browse: "瀏覽 Pamela 課表",
       guide: "使用教學",
       paste: "貼上 YouTube 連結",
@@ -280,7 +280,7 @@ export const copy = {
     trainer: {
       standing: "站姿 · 左／右",
       mat: "墊上 · 上／下",
-      legend: "張開手掌暫停 · 豎拇指播放 · 勝利手勢切換版面 · 豎拇指向下倒帶 10 秒",
+      legend: "張開手掌暫停 · 豎拇指播放 · 勝利手勢切換版面 · 拇指朝下或食指朝上倒帶10秒",
       last: "剛才：{g}",
       end: "結束這堂課",
       you: "你",
@@ -311,7 +311,7 @@ export const copy = {
       switchName: "切換版面",
       switchHow: "勝利手勢（食指與中指）。站姿是左右分屏；墊上是教練在上、你在下。",
       rewindName: "倒帶 10 秒",
-      rewindHow: "拇指朝下。影片會往回跳十秒。",
+      rewindHow: "拇指朝下，或食指朝上。影片會往回跳十秒。",
       tipTitle: "小提示",
       tip1: "瀏覽器詢問鏡頭時請允許。鏡子畫面只留在這台裝置。",
       tip2: "一次一隻手，比兩隻手同時比劃更穩。",
@@ -319,9 +319,9 @@ export const copy = {
     },
     about: {
       title: "關於這個網頁",
-      p1: "這是作者 Rain Liu 因為喜歡看 Pamela Reif 健身影片，而做的小工具。",
-      p2: "完全開源、不營利。沒有付費牆、沒有廣告，也不宣稱擁有 Pamela 的內容。",
-      p3: "目錄裡的每一堂課，都是 Pamela 在 YouTube 上的教材。這個網站只是把它們嵌進來，讓你可以一邊鏡子、一邊跟練。",
+      p1: "這是作者 Rain Liu 因為喜歡看 Pamela Reif 健身影片所做的小工具。",
+      p2: "完全開源、不營利。",
+      p3: "所有影片都是 Pamela 的 YouTube 教材。",
       p4: "與 Pamela Reif 沒有官方關係。若你喜歡這些課，請到 YouTube 支持她。",
     },
     yt: {

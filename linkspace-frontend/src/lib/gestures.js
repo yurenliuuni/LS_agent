@@ -48,6 +48,6 @@ function mapGesture(name) {
   if (name === "Open_Palm") return "pause";
   if (name === "Thumb_Up") return "play";
   if (name === "Victory" || name === "ILoveYou") return "switch";
-  if (name === "Thumb_Down") return "rewind";
+  if (name === "Thumb_Down" || name === "Pointing_Up") return "rewind";
   return null;
 }
