@@ -9,7 +9,7 @@ export default function Account() {
 
   const save = (event) => {
     event.preventDefault();
-    const name = displayName.trim() || "訪客";
+    const name = displayName.trim() || "Guest";
     setUser({
       id: existing?.id || crypto.randomUUID(),
       username: name,
@@ -21,20 +21,20 @@ export default function Account() {
   return (
     <main className="panel">
       <div className="panel-head">
-        <h2>你的稱呼</h2>
-        <p>先不用註冊。這個名字會顯示在頂欄與俱樂部。</p>
+        <h2>Your name</h2>
+        <p>No account required. This is only stored on this device.</p>
       </div>
       <form className="url-form" onSubmit={save}>
-        <label htmlFor="name">顯示名稱</label>
+        <label htmlFor="name">Display name</label>
         <div className="input-row">
           <input
             id="name"
             value={displayName}
             onChange={(event) => setDisplayName(event.target.value)}
-            placeholder="例如：阿明"
+            placeholder="Your name"
           />
           <button className="btn" type="submit">
-            儲存
+            Save
           </button>
         </div>
       </form>

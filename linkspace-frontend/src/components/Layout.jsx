@@ -1,27 +1,28 @@
 import { NavLink, Outlet } from "react-router-dom";
+import logo from "../assets/logo.svg";
 import { loadState, statsFrom } from "../lib/store.js";
 
 export default function Layout() {
   const state = loadState();
   const stats = statsFrom(state);
-  const name = state.user?.displayName || state.user?.username || "訪客";
+  const name = state.user?.displayName || state.user?.username || "Guest";
 
   return (
     <div className="shell">
       <header className="topbar">
         <NavLink to="/" className="brand">
-          <span className="brand-mark">雲</span>
-          LinkSpace
+          <img src={logo} alt="" className="brand-logo" />
+          linksparks
         </NavLink>
         <nav className="nav">
-          <NavLink to="/train">課程</NavLink>
-          <NavLink to="/studio">跟練</NavLink>
-          <NavLink to="/progress">紀錄</NavLink>
-          <NavLink to="/club">俱樂部</NavLink>
+          <NavLink to="/train">Train</NavLink>
+          <NavLink to="/studio">Paste a link</NavLink>
+          <NavLink to="/progress">History</NavLink>
+          <NavLink to="/club">Clubs</NavLink>
         </nav>
         <NavLink to="/account" className="user-chip">
           {name}
-          <small>{stats.streak} 日連續</small>
+          <small>{stats.streak} day streak</small>
         </NavLink>
       </header>
       <Outlet />
