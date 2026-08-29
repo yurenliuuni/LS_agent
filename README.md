@@ -4,20 +4,10 @@
 
 Web MVP：指定下背修復動作 + 鏡頭即時骨架評分 + YouTube 跟練 + 每日紀錄 + 俱樂部。姿勢分析在瀏覽器內跑（MediaPipe），不需要 GPU 伺服器。
 
-## 建議：開一個全新 GitHub repo
+產品 repo：https://github.com/yurenliuuni/LS_agent  
+上線後：https://yurenliuuni.github.io/LS_agent/
 
-`LS_v0` 的 `master` 與這份產品是兩條不相干的 git 歷史，不必硬比。請建一個**空的**新 repo（不要勾 README / .gitignore / license），例如 `linkspace`，然後把 URL 貼回來，我推上 `main`。
-
-建立 Fine-grained 或 classic PAT 時請一次給齊：
-
-| 權限 | 為什麼需要 |
-| --- | --- |
-| `contents: write` | 推程式 |
-| `workflows: write` | 寫 GitHub Actions 才能自動上線 |
-| `pages: write` | 部署 GitHub Pages |
-| `pull-requests: write` | 開 PR（可選） |
-
-Repo **Settings → Pages → Source** 選 **GitHub Actions**。
+Repo **Settings → Pages → Source** 選 **GitHub Actions**（若第一次部署失敗，開這個後再重跑 Actions）。
 
 ## 本機前端
 
