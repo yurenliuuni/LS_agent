@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- 瀏覽器分頁標題顯示為 "LinkSpace" -->
+    <title>LinkSpace</title>
+
+    <!-- 從 Google Fonts 載入 Space Grotesk 字體，支援 400/500/600/700 粗細  -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- 開始內嵌 CSS 樣式表 -->
+    <style>
+      /* 通用選擇器：移除所有元素的外距與內距，並將 box-sizing 設為 border-box（寬高包含邊框與內距） */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Space Grotesk", system-ui, sans-serif;
+        background: #fafafa;
+        color: #1a1a1a;
+      }
+
+      /* 導覽列： */
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 40px;
+        border-bottom: 1px solid #e8e8e8;
+        background: #fff;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+      }
+
+      /* 品牌圖標 */
+      .brand-icon {
+        width: 32px;
+        height: 32px;
+        background: #8c1515;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-weight: 700;
+      }
+      /* 主視覺區 */
+      .hero {
+        text-align: center;
+        padding: 80px 20px;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      /* 主標題 */
+      .hero h1 {
+        font-size: 48px;
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        line-height: 0.95;
+        margin-bottom: 20px;
+      }
+
+      /* 主視覺段落 */
+      .hero p {
+        font-size: 17px;
+        color: #4d4f53;
+        line-height: 1.6;
+        margin-bottom: 32px;
+      }
+
+      /* 按鈕樣式  open vision trainer */
+      .btn {
+        display: inline-block;
+        padding: 12px 28px;
+        background: #8c1515;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 15px;
+        border: none;
+        cursor: pointer;
+      }
+
+      /* 外框按鈕  browse modes */
+      .btn-outline {
+        /* 透明背景，深色文字，1.5px 深色實線邊框 */
+        background: transparent;
+        color: #1a1a1a;
+        border: 1.5px solid #1a1a1a;
+        margin-left: 12px;
+      }
+      .modes {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px 60px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+      .card {
+        background: #fff;
+        border: 1px solid #e8e8e8;
+        border-radius: 14px;
+        padding: 24px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .card:hover {
+        border-color: #8c1515;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(140, 21, 21, 0.06);
+      }
+      .card h3 {
+        font-size: 17px;
+        font-weight: 600;
+        margin-bottom: 6px;
+        letter-spacing: -0.02em;
+      }
+      .card p {
+        font-size: 13px;
+        color: #4d4f53;
+        line-height: 1.5;
+      }
+      .pill {
+        display: inline-block;
+        padding: 4px 12px;
+        background: rgba(140, 21, 21, 0.07);
+        color: #8c1515;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 12px;
+      }
+      .status {
+        text-align: center;
+        padding: 40px;
+        color: #4d4f53;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="brand">
+        <div class="brand-icon">L</div>
+        LinkSpace
+      </div>
+      <div id="nav-status" style="font-size: 13px; color: #4d4f53">
+        Checking API...
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="pill" style="margin-bottom: 20px">
+        AI-powered sports training
+      </div>
+      <h1>Any space is your<br />playground.</h1>
+      <p>
+        Every move sparks a connection. Real-time pose detection scores your
+        form against world-class athletes.
+      </p>
+      <a href="trainer.html" class="btn">Open vision trainer</a>
+      <a href="#modes" class="btn btn-outline">Browse modes</a>
+    </section>
+
+    <div class="status" id="api-status">Loading game modes from API...</div>
+
+    <section class="modes" id="modes"></section>
+
+    <script>
+      const isDevPort =
+        location.port === "5173" || location.port === "4173";
+      const API =
+        location.protocol === "file:" || isDevPort
+          ? "http://localhost:8000"
+          : "";
+
+      const FALLBACK_MODES = [
+        {
+          slug: "poomsae",
+          name: "Taekwondo Poomsae",
+          description: "Real-time pose detection training",
+        },
+        {
+          slug: "breaking",
+          name: "Breaking",
+          description: "Real-time pose detection training",
+        },
+        {
+          slug: "boxing",
+          name: "Boxing",
+          description: "Real-time pose detection training",
+        },
+        {
+          slug: "fitsport",
+          name: "Fit sport",
+          description: "Real-time pose detection training",
+        },
+      ];
+
+      function renderModes(modes) {
+        document.getElementById("api-status").style.display = "none";
+        const container = document.getElementById("modes");
+        const icons = {
+          poomsae: "🥋",
+          breaking: "💥",
+          boxing: "🥊",
+          fitsport: "🏃",
+        };
+        container.innerHTML = modes
+          .map(
+            (m) => `
+          <div class="card" onclick="location.href='trainer.html?mode=${m.slug}'">
+            <div style="display: flex; justify-content: space-between; align-items: start;">
+              <div style="font-size: 32px;">${icons[m.slug] || "⚡"}</div>
+              <span class="pill">Vision scored</span>
+            </div>
+            <h3>${m.name}</h3>
+            <p>${m.description || "Real-time pose detection training"}</p>
+          </div>
+        `,
+          )
+          .join("");
+      }
+
+      async function checkHealth() {
+        try {
+          const res = await fetch(`${API}/health`);
+          const data = await res.json();
+          document.getElementById("nav-status").textContent =
+            `● API ${data.version} running`;
+          document.getElementById("nav-status").style.color = "#175E54";
+          loadModes();
+        } catch (e) {
+          document.getElementById("nav-status").textContent = "● API offline";
+          document.getElementById("nav-status").style.color = "#8C1515";
+          document.getElementById("api-status").innerHTML = `
+          <div style="color: #8C1515; font-weight: 600;">Backend not reachable</div>
+          <div style="margin-top: 8px; font-size: 13px;">Run: docker-compose up -d — trainer still opens camera</div>
+        `;
+          renderModes(FALLBACK_MODES);
+        }
+      }
+
+      async function loadModes() {
+        try {
+          const res = await fetch(`${API}/games/modes`);
+          const modes = await res.json();
+          renderModes(modes.length ? modes : FALLBACK_MODES);
+        } catch (e) {
+          renderModes(FALLBACK_MODES);
+        }
+      }
+
+      checkHealth();
+    </script>
+  </body>
+</html>

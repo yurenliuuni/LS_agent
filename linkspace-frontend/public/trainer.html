@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vision Trainer — LinkSpace</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Space Grotesk", system-ui, sans-serif;
+        background: #111;
+        color: #f5f5f5;
+        min-height: 100vh;
+      }
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 28px;
+        background: #1a1a1a;
+        border-bottom: 1px solid #2a2a2a;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+        font-size: 18px;
+        color: #fff;
+        text-decoration: none;
+      }
+      .brand-icon {
+        width: 32px;
+        height: 32px;
+        background: #8c1515;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+      }
+      .meta {
+        font-size: 13px;
+        color: #9a9a9a;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: 1fr 280px;
+        gap: 20px;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 24px 20px 40px;
+      }
+      .stage {
+        position: relative;
+        background: #000;
+        border-radius: 16px;
+        overflow: hidden;
+        aspect-ratio: 4 / 3;
+      }
+      video,
+      img.overlay {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transform: scaleX(-1);
+      }
+      img.overlay {
+        z-index: 2;
+      }
+      .placeholder {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: #888;
+        padding: 24px;
+        z-index: 1;
+      }
+      .hud {
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+        z-index: 3;
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        pointer-events: none;
+      }
+      .chip {
+        background: rgba(0, 0, 0, 0.62);
+        border-radius: 10px;
+        padding: 10px 14px;
+        font-size: 13px;
+      }
+      .chip strong {
+        display: block;
+        font-size: 28px;
+        letter-spacing: -0.04em;
+      }
+      .side {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .panel {
+        background: #1a1a1a;
+        border: 1px solid #2a2a2a;
+        border-radius: 14px;
+        padding: 16px;
+      }
+      .panel h2 {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #cfcfcf;
+      }
+      .btn {
+        width: 100%;
+        padding: 12px 16px;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        font-family: inherit;
+      }
+      .btn-primary {
+        background: #8c1515;
+        color: #fff;
+      }
+      .btn-primary:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+      .btn-ghost {
+        background: transparent;
+        color: #eee;
+        border: 1.5px solid #444;
+      }
+      .status-ok {
+        color: #7dcea0;
+      }
+      .status-bad {
+        color: #e07a7a;
+      }
+      .feedback {
+        font-size: 13px;
+        line-height: 1.5;
+        color: #d0d0d0;
+        min-height: 3em;
+      }
+      .joints {
+        font-size: 12px;
+        color: #aaa;
+        display: grid;
+        gap: 4px;
+      }
+      canvas {
+        display: none;
+      }
+      @media (max-width: 840px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="brand" href="/">
+        <div class="brand-icon">L</div>
+        LinkSpace
+      </a>
+      <div class="meta" id="nav-meta">Connecting camera…</div>
+    </nav>
+
+    <div class="layout">
+      <div class="stage">
+        <div class="placeholder" id="placeholder">
+          Allow camera access to start pose monitoring.
+        </div>
+        <video id="live" playsinline muted autoplay></video>
+        <img class="overlay" id="overlay" alt="" hidden />
+        <canvas id="frame-canvas" width="640" height="480"></canvas>
+        <div class="hud">
+          <div class="chip">
+            Combo
+            <strong id="combo">0</strong>
+          </div>
+          <div class="chip" style="text-align: right">
+            Similarity
+            <strong id="score">—</strong>
+          </div>
+        </div>
+      </div>
+
+      <aside class="side">
+        <div class="panel">
+          <h2 id="mode-title">Vision trainer</h2>
+          <p class="feedback" id="session-state">Idle</p>
+          <button class="btn btn-primary" id="btn-start" type="button">
+            Start monitoring
+          </button>
+          <div style="height: 8px"></div>
+          <button class="btn btn-ghost" id="btn-stop" type="button" disabled>
+            Stop
+          </button>
+        </div>
+        <div class="panel">
+          <h2>Live feedback</h2>
+          <p class="feedback" id="feedback">Waiting for first frame…</p>
+        </div>
+        <div class="panel">
+          <h2>Detection</h2>
+          <div class="joints" id="stats">
+            <div>Person: —</div>
+            <div>Quality: —</div>
+            <div>Latency: —</div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <script>
+      const params = new URLSearchParams(location.search);
+      const gameMode = params.get("mode") || "poomsae";
+      const isDevPort =
+        location.port === "5173" || location.port === "4173";
+      const apiBase =
+        location.protocol === "file:" || isDevPort
+          ? "http://localhost:8000"
+          : "";
+      const wsBase =
+        location.protocol === "file:" || isDevPort
+          ? "ws://localhost:8000"
+          : `${location.protocol === "https:" ? "wss:" : "ws:"}//${location.host}`;
+
+      const MODE_NAMES = {
+        poomsae: "Taekwondo Poomsae",
+        breaking: "Breaking",
+        boxing: "Boxing",
+        fitsport: "Fit sport",
+      };
+
+      const video = document.getElementById("live");
+      const overlay = document.getElementById("overlay");
+      const canvas = document.getElementById("frame-canvas");
+      const ctx = canvas.getContext("2d");
+      const btnStart = document.getElementById("btn-start");
+      const btnStop = document.getElementById("btn-stop");
+
+      document.getElementById("mode-title").textContent =
+        MODE_NAMES[gameMode] || gameMode;
+
+      const clientId = crypto.randomUUID
+        ? crypto.randomUUID()
+        : `c-${Date.now()}`;
+
+      let stream = null;
+      let ws = null;
+      let sending = false;
+      let loopId = 0;
+      let waitingForResult = false;
+
+      function setMeta(text, ok) {
+        const el = document.getElementById("nav-meta");
+        el.textContent = text;
+        el.className = "meta " + (ok ? "status-ok" : "status-bad");
+      }
+
+      async function openCamera() {
+        stream = await navigator.mediaDevices.getUserMedia({
+          audio: false,
+          video: {
+            facingMode: "user",
+            width: { ideal: 640 },
+            height: { ideal: 480 },
+          },
+        });
+        video.srcObject = stream;
+        await video.play();
+        document.getElementById("placeholder").style.display = "none";
+      }
+
+      function connectSocket() {
+        return new Promise((resolve, reject) => {
+          ws = new WebSocket(`${wsBase}/ws/vision/${clientId}`);
+          ws.binaryType = "arraybuffer";
+          const timer = setTimeout(() => {
+            reject(new Error("WebSocket timeout"));
+          }, 8000);
+          ws.onopen = () => {
+            clearTimeout(timer);
+            ws.send(
+              JSON.stringify({
+                command: "start",
+                game_mode: gameMode,
+                reference_sequence: [],
+              }),
+            );
+            resolve();
+          };
+          ws.onerror = () => {
+            clearTimeout(timer);
+            reject(new Error("WebSocket failed"));
+          };
+          ws.onmessage = (event) => {
+            waitingForResult = false;
+            let data;
+            try {
+              data = JSON.parse(event.data);
+            } catch {
+              return;
+            }
+            if (data.type === "session_started") {
+              document.getElementById("session-state").textContent =
+                `Pipeline live · ${data.game_mode}`;
+              return;
+            }
+            if (data.type === "session_ended") {
+              document.getElementById("session-state").textContent =
+                "Session ended";
+              return;
+            }
+            if (data.type === "frame_result") {
+              applyFrameResult(data);
+            }
+            if (data.type === "error") {
+              document.getElementById("feedback").textContent = data.message;
+            }
+          };
+          ws.onclose = () => {
+            if (sending) {
+              setMeta("Vision socket closed", false);
+            }
+          };
+        });
+      }
+
+      function applyFrameResult(data) {
+        if (data.annotated_frame) {
+          overlay.hidden = false;
+          overlay.src = data.annotated_frame;
+        }
+        const score =
+          data.similarity_score == null ? "—" : `${Math.round(data.similarity_score)}%`;
+        document.getElementById("score").textContent = score;
+        document.getElementById("combo").textContent = data.combo ?? 0;
+        document.getElementById("feedback").textContent = (
+          data.feedback || []
+        ).join(" · ") || (data.person_detected ? "Pose locked" : "No person detected");
+        document.getElementById("stats").innerHTML = `
+          <div>Person: ${data.person_detected ? "detected" : "not found"}</div>
+          <div>Quality: ${data.quality || "—"}</div>
+          <div>Latency: ${data.processing_ms != null ? data.processing_ms + " ms" : "—"}</div>
+        `;
+      }
+
+      function captureAndSend() {
+        if (!sending || !ws || ws.readyState !== WebSocket.OPEN) return;
+        if (waitingForResult) return;
+        if (video.readyState < 2) return;
+
+        const vw = video.videoWidth || 640;
+        const vh = video.videoHeight || 480;
+        if (canvas.width !== vw || canvas.height !== vh) {
+          canvas.width = vw;
+          canvas.height = vh;
+        }
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        waitingForResult = true;
+        window.setTimeout(() => {
+          waitingForResult = false;
+        }, 1500);
+        canvas.toBlob(
+          (blob) => {
+            if (!blob || !sending || !ws || ws.readyState !== WebSocket.OPEN) {
+              waitingForResult = false;
+              return;
+            }
+            blob.arrayBuffer().then((buf) => {
+              if (ws.readyState === WebSocket.OPEN) ws.send(buf);
+            });
+          },
+          "image/jpeg",
+          0.7,
+        );
+      }
+
+      function startLoop() {
+        const tick = () => {
+          captureAndSend();
+          loopId = window.setTimeout(tick, 100);
+        };
+        tick();
+      }
+
+      async function startMonitoring() {
+        btnStart.disabled = true;
+        document.getElementById("session-state").textContent = "Starting camera…";
+        try {
+          if (!stream) await openCamera();
+          setMeta("Camera on · connecting vision pipeline", true);
+          await connectSocket();
+          sending = true;
+          waitingForResult = false;
+          startLoop();
+          btnStop.disabled = false;
+          document.getElementById("session-state").textContent =
+            "Streaming frames to /ws/vision";
+          setMeta(`● ${gameMode} monitoring`, true);
+        } catch (err) {
+          btnStart.disabled = false;
+          btnStop.disabled = true;
+          const msg =
+            err && err.message
+              ? err.message
+              : "Could not start camera or vision socket";
+          document.getElementById("placeholder").style.display = "flex";
+          document.getElementById("placeholder").textContent = msg;
+          document.getElementById("session-state").textContent = msg;
+          setMeta(msg, false);
+        }
+      }
+
+      function stopMonitoring() {
+        sending = false;
+        window.clearTimeout(loopId);
+        if (ws && ws.readyState === WebSocket.OPEN) {
+          ws.send(JSON.stringify({ command: "stop" }));
+          ws.close();
+        }
+        ws = null;
+        if (stream) {
+          stream.getTracks().forEach((t) => t.stop());
+          stream = null;
+        }
+        video.srcObject = null;
+        overlay.hidden = true;
+        btnStart.disabled = false;
+        btnStop.disabled = true;
+        document.getElementById("placeholder").style.display = "flex";
+        document.getElementById("placeholder").textContent = "Monitoring stopped.";
+        document.getElementById("session-state").textContent = "Stopped";
+        setMeta("Idle", false);
+      }
+
+      btnStart.addEventListener("click", startMonitoring);
+      btnStop.addEventListener("click", stopMonitoring);
+
+      startMonitoring();
+    </script>
+  </body>
+</html>

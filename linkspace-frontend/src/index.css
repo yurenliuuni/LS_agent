@@ -1,0 +1,10 @@
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: #eef6f9;
+  color: #0e2433;
+  font-family: "DM Sans", "PingFang TC", "Noto Sans TC", sans-serif;
+}
+button, input { font: inherit; }
+button { cursor: pointer; }

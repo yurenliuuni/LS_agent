@@ -1,0 +1,86 @@
+#about the file: 如果 Docker 是一個個獨立的「貨櫃」（容器），那 Docker Compose 就是用來一次管理一整批貨櫃的工具。你不用手動去一個個啟動 API 同事、資料庫、Redis，你只需要對指揮官下一個指令（docker-compose up），它就會自動幫你把所有同事叫起床、分配好座位、排好先後順序並讓他們互相連線。
+#.yml（或 .yaml）是一種人類易讀的資料序列化語言。它常被用來寫系統的設定檔
+services:
+  api:
+    build: . #透過當前目錄的 Dockerfile（build: .）即時編譯。
+    ports: #將主機的port 8000 連到對應container 內的port 8000
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://linkspace:linkspace@db:5432/linkspace
+      - REDIS_URL=redis://redis:6379
+      - SECRET_KEY=${SECRET_KEY:-change-me-in-production} #design for security: 會優先讀取主機環境變數中的 ${SECRET_KEY}。如果沒設定，才用後面的預設值。這能防止機密金鑰被寫死（Hardcode）在程式碼中流出。
+    depends_on: #design philosophy: 依賴順序管理 (Dependency Management: Docker 會確保 db 和 redis 先啟動，才會開始啟動 API 和 Worker，避免連線失敗。
+      - db
+      - redis
+      #語法：沒有細節設定時 使用「列表（List / Array）」 只需要列出名字，不需要額外參數時，使用 -（連字號）。
+    # deploy:
+    #   replicas: 2 # Swarm 模式下直接啟動 2 個 API instance來分流
+    #   resources:
+    #     limits:
+    #       cpus: "2.0"
+    #       memory: 2G
+    healthcheck: #每 30 秒自動偵測一次 http://localhost:8000/health，若連續 3 次失敗會被標記為不健康。
+      #有細節設定時 使用「映射/字典（Map / Dictionary）」
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  db:
+    image: postgres:15-alpine #使用輕量化的 postgres:15-alpine image, Docker image就是別人幫你包裝好的「開箱即用執行檔」
+    environment:
+      - POSTGRES_USER=linkspace
+      - POSTGRES_PASSWORD=linkspace
+      - POSTGRES_DB=linkspace
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql #掛載了 ./schema.sql，在第一次啟動時會自動執行該 SQL 檔來建立資料表結構（Schema）。
+    ports:
+      - "5432:5432"
+    deploy:
+      resources: #design phi: 嚴格的資源限制 (Resource Limits): db 最多用 1 核 CPU、1G 記憶體
+        limits:
+          cpus: "1.0"
+          memory: 1G
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  redis: #cache and message broker, 在此架構中，它同時扮演快取記憶體以及 worker 的訊息佇列（Message Broker）。
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  worker: # (非同步任務處理器)
+    build: .
+    command: celery -A tasks worker --loglevel=info --concurrency=4 #開啟 4 個並行線程（concurrency=4）來處理耗時任務（例如寄信、大數據運算）。
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://linkspace:linkspace@db:5432/linkspace
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - db
+      - redis
+    deploy:
+      replicas: 2 #系統預設就配置了 2 個 Worker 容器（共 8 個併發線程）來瘋狂消耗非同步任務，具備良好的高並發處理能力。
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 1G
+
+volumes: #design philosophy: 資料持久化 (Data Persistence),底部的 volumes 定義了 postgres_data 與 redis_data 兩個具名磁碟卷。確保了當容器重啟、重蓋或更新時，資料庫的資料和 Redis 的數據不會遺失。
+  postgres_data:
+  redis_data:
