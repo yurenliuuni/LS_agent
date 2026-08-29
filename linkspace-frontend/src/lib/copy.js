@@ -114,7 +114,8 @@ export const copy = {
     trainer: {
       standing: "Standing · left / right",
       mat: "Mat · top / bottom",
-      legend: "Open palm pause · thumbs up play · peace switch layout · thumbs down or point up rewind 10s",
+      legend:
+        "Open palm pause · thumbs up play · peace switch layout · thumbs down or point up rewind 10s",
       last: "last: {g}",
       end: "End session",
       you: "You",
@@ -153,10 +154,12 @@ export const copy = {
     },
     about: {
       title: "About this site",
-      p1: "This is a small tool Rain Liu made because he likes watching Pamela Reif workout videos.",
-      p2: "It is fully open source and not for profit.",
-      p3: "Every video here is Pamela’s teaching material on YouTube.",
-      p4: "Not affiliated with Pamela Reif. If you enjoy the sessions, support her on YouTube.",
+      p1: "Hi, I’m 語仁 Rain Liu!",
+      p2: "I made this site because I like doing Pamela Reif’s home workouts.",
+      p3: "Walking back to the computer to skip and pause was too much hassle (yes, even while exercising). I wanted a page that makes picking a session and controlling it easier.",
+      p4: "About 99% of the code was written with Cursor Agent; see the GitHub repo. Fully open source, not for profit.",
+      p5: "Aside from links you paste yourself, every default video is Pamela’s teaching material on YouTube.",
+      p6: "Not affiliated with Pamela Reif. If you enjoy this content, support her on YouTube.",
     },
     yt: {
       blocked: "YouTube blocked embedding for this video.",
@@ -280,7 +283,8 @@ export const copy = {
     trainer: {
       standing: "站姿 · 左／右",
       mat: "墊上 · 上／下",
-      legend: "張開手掌暫停 · 豎拇指播放 · 勝利手勢切換版面 · 拇指朝下或食指朝上倒帶10秒",
+      legend:
+        "張開手掌暫停 · 豎拇指播放 · 勝利手勢Ｖ切換版面 · 拇指朝下或食指朝上倒帶10秒",
       last: "剛才：{g}",
       end: "結束這堂課",
       you: "你",
@@ -319,10 +323,12 @@ export const copy = {
     },
     about: {
       title: "關於這個網頁",
-      p1: "這是作者 Rain Liu 因為喜歡看 Pamela Reif 健身影片所做的小工具。",
-      p2: "完全開源、不營利。",
-      p3: "所有影片都是 Pamela 的 YouTube 教材。",
-      p4: "與 Pamela Reif 沒有官方關係。若你喜歡這些課，請到 YouTube 支持她。",
+      p1: "嗨，我是語仁 Rain Liu！",
+      p2: "開發這個網站是因為自己本身很喜歡看 Pamela Reif 的影片居家健身。",
+      p3: "因為要反覆到電腦前面調整實在太麻煩了（明明是健身還怕麻煩哈哈），所以就想做個網站讓我更方便選課與操作。",
+      p4: "99%的程式設計都是Cursor Agent完成的，詳見github repo。完全開源、不營利。",
+      p5: "除了用戶自選的健身影片連結，預設呈現的所有影片都是 Pamela 的 YouTube 教材。",
+      p6: "與 Pamela Reif 沒有官方關係。若你喜歡這些內容，請到 YouTube 支持她。",
     },
     yt: {
       blocked: "YouTube 禁止內嵌這支影片。",

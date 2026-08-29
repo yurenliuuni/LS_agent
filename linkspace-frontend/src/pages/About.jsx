@@ -9,10 +9,9 @@ export default function About() {
         <h2>{t("about.title")}</h2>
       </div>
       <div className="about-copy">
-        <p>{t("about.p1")}</p>
-        <p>{t("about.p2")}</p>
-        <p>{t("about.p3")}</p>
-        <p>{t("about.p4")}</p>
+        {["p1", "p2", "p3", "p4", "p5", "p6"].map((key) => (
+          <p key={key}>{t(`about.${key}`)}</p>
+        ))}
       </div>
     </main>
   );
