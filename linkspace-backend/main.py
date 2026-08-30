@@ -36,7 +36,6 @@ import json
 import logging #system log 
 import os
 import time
-from pathlib import Path
 
 #manage setup and teardown operations for asynchronous resources like database or network sockets
 from contextlib import asynccontextmanager #a built-in Python decorator that converts an asynchronous generator function into an asynchronous context manager
@@ -52,7 +51,6 @@ import numpy as np
 from dotenv import load_dotenv
 from fastapi import FastAPI, Depends, HTTPException, Query, WebSocket, WebSocketDisconnect, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
 from fastapi.security import OAuth2PasswordBearer
 
 #cybersecurity 
@@ -981,21 +979,3 @@ async def extract_reference_from_video(
         ],
     }
 
-
-FRONTEND_DIR = Path(__file__).parent / "frontend"
-
-
-@app.get("/", include_in_schema=False)
-async def serve_home():
-    index = FRONTEND_DIR / "index.html"
-    if not index.exists():
-        raise HTTPException(status_code=404, detail="Frontend not found")
-    return FileResponse(index)
-
-
-@app.get("/trainer.html", include_in_schema=False)
-async def serve_trainer():
-    trainer = FRONTEND_DIR / "trainer.html"
-    if not trainer.exists():
-        raise HTTPException(status_code=404, detail="Trainer page not found")
-    return FileResponse(trainer)
