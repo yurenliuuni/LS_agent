@@ -1,5 +1,5 @@
 import { useI18n } from "../lib/i18n.jsx";
-import tSign from "../assets/gestures/t_sign_icon.svg";
+import tSign from "../assets/gestures/T_gesture.svg";
 import thumbUp from "../assets/gestures/thumbup_icon.svg";
 import victory from "../assets/gestures/victory_icon.svg";
 import thumbDown from "../assets/gestures/thumbdown_icon.svg";
