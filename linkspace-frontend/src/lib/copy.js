@@ -1,3 +1,9 @@
+export const ABOUT_LINKS = {
+  rain: "https://linktr.ee/rain_liu",
+  pamela: "https://www.youtube.com/@PamelaRf1",
+  github: "https://github.com/yurenliuuni/LS_agent",
+};
+
 export const copy = {
   en: {
     nav: {
@@ -23,9 +29,11 @@ export const copy = {
       minutes: "minutes",
       nowFit: "Suggested for now",
       byTime: "By time of day",
-      byTimeHint: "Pick a slot that fits your day — wake-up, a no-sweat lunch break, or wind-down before bed.",
+      byTimeHint:
+        "Pick a slot that fits your day — wake-up, a no-sweat lunch break, or wind-down before bed.",
       byFocus: "By body focus",
-      byFocusHint: "Target abs, neck and shoulders, back, hamstrings from sitting, or a round-back posture.",
+      byFocusHint:
+        "Target abs, neck and shoulders, back, hamstrings from sitting, or a round-back posture.",
       quick: "Quick picks",
       defaultLayout: "Default layout: {layout}",
       standing: "standing",
@@ -38,9 +46,11 @@ export const copy = {
     },
     collection: {
       timeIndex: "By time of day",
-      timeLede: "Three windows: morning energy, a midday session that will not soak your clothes, and a calm wind-down before sleep.",
+      timeLede:
+        "Three windows: morning energy, a midday session that will not soak your clothes, and a calm wind-down before sleep.",
       focusIndex: "By body focus",
-      focusLede: "Choose a muscle group or a desk-life goal. Each list is a short Pamela set you can finish in one sitting.",
+      focusLede:
+        "Choose a muscle group or a desk-life goal. Each list is a short Pamela set you can finish in one sitting.",
       workouts: "{n} workouts",
       backTime: "All time slots",
       backFocus: "All focuses",
@@ -48,37 +58,45 @@ export const copy = {
     time: {
       morning: {
         name: "Morning",
-        blurb: "Wake the body without a full gym session. Standing cardio and short stretches.",
+        blurb:
+          "Wake the body without a full gym session. Standing cardio and short stretches.",
       },
       midday: {
         name: "Midday · no sweat",
-        blurb: "Office-friendly mobility and low-impact work. Stay presentable after lunch.",
+        blurb:
+          "Office-friendly mobility and low-impact work. Stay presentable after lunch.",
       },
       evening: {
         name: "Evening · before bed",
-        blurb: "Slow stretch and posture work so you can cool down instead of spike your heart rate.",
+        blurb:
+          "Slow stretch and posture work so you can cool down instead of spike your heart rate.",
       },
     },
     focus: {
       abs: {
         name: "Abs",
-        blurb: "Core sessions from beginner to six-pack. Mat layout by default.",
+        blurb:
+          "Core sessions from beginner to six-pack. Mat layout by default.",
       },
       neck: {
         name: "Neck & shoulders",
-        blurb: "Open the chest and unload the neck after screens and a forward head.",
+        blurb:
+          "Open the chest and unload the neck after screens and a forward head.",
       },
       back: {
         name: "Back",
-        blurb: "Upper and lower back strength plus stretch for a more stable spine.",
+        blurb:
+          "Upper and lower back strength plus stretch for a more stable spine.",
       },
       hamstrings: {
         name: "Hamstrings · desk life",
-        blurb: "Posterior chain and hip openers for people who sit most of the day.",
+        blurb:
+          "Posterior chain and hip openers for people who sit most of the day.",
       },
       posture: {
         name: "Undo a round back",
-        blurb: "Counter the desk slump: chest open, mid-back, and a taller stance.",
+        blurb:
+          "Counter the desk slump: chest open, mid-back, and a taller stance.",
       },
     },
     studio: {
@@ -144,7 +162,8 @@ export const copy = {
       playName: "Play",
       playHow: "Thumbs up.",
       switchName: "Switch layout",
-      switchHow: "Peace sign (index and middle finger). Standing is left / right; mat is coach on top, you below.",
+      switchHow:
+        "Peace sign (index and middle finger). Standing is left / right; mat is coach on top, you below.",
       rewindName: "Rewind 10 seconds",
       rewindHow: "Thumbs down or point up. The video jumps back ten seconds.",
       tipTitle: "Tips",
@@ -154,12 +173,12 @@ export const copy = {
     },
     about: {
       title: "About this site",
-      p1: "Hi, I’m 語仁 Rain Liu!",
-      p2: "I made this site because I like doing Pamela Reif’s home workouts.",
-      p3: "Walking back to the computer to skip and pause was too much hassle (yes, even while exercising). I wanted a page that makes picking a session and controlling it easier.",
-      p4: "About 99% of the code was written with Cursor Agent; see the GitHub repo. Fully open source, not for profit.",
-      p5: "Aside from links you paste yourself, every default video is Pamela’s teaching material on YouTube.",
-      p6: "Not affiliated with Pamela Reif. If you enjoy this content, support her on YouTube.",
+      rain: "Rain Liu",
+      pamela: "Pamela Reif",
+      github: "GitHub repo",
+      p1: "Hi, I’m 語仁 {rain}!",
+      p2: "I made this site because I like doing {pamela}’s home workouts. Walking back to the computer to skip and pause was too much hassle (yes, even while exercising). I wanted a page that makes picking a session and controlling it easier.",
+      p3: "About 99% of the code was written with Cursor Agent; see the {github}. Fully open source, not for profit. Aside from links you paste yourself, every default video is {pamela}’s teaching material on YouTube. Not affiliated with {pamela}. If you enjoy this content, support her on YouTube.",
     },
     yt: {
       blocked: "YouTube blocked embedding for this video.",
@@ -209,7 +228,8 @@ export const copy = {
       timeIndex: "依時段",
       timeLede: "三個時段：早上喚醒、中午不弄濕衣服、晚上睡前放慢。",
       focusIndex: "依部位與功能",
-      focusLede: "選一個肌群或久坐目標。每份清單都是可以一次做完的 Pamela 短課。",
+      focusLede:
+        "選一個肌群或久坐目標。每份清單都是可以一次做完的 Pamela 短課。",
       workouts: "{n} 堂課",
       backTime: "全部時段",
       backFocus: "全部部位",
@@ -313,7 +333,8 @@ export const copy = {
       playName: "播放",
       playHow: "豎起拇指（讚）。",
       switchName: "切換版面",
-      switchHow: "勝利手勢（食指與中指）。站姿是左右分屏；墊上是教練在上、你在下。",
+      switchHow:
+        "勝利手勢（食指與中指）。站姿是左右分屏；墊上是教練在上、你在下。",
       rewindName: "倒帶 10 秒",
       rewindHow: "拇指朝下，或食指朝上。影片會往回跳十秒。",
       tipTitle: "小提示",
@@ -323,13 +344,14 @@ export const copy = {
     },
     about: {
       title: "關於這個網頁",
-      p1: "嗨，我是語仁 Rain Liu！",
-      p2: "開發這個網站是因為自己本身很喜歡看 Pamela Reif 的影片居家健身。",
-      p3: "因為要反覆到電腦前面調整實在太麻煩了（明明是健身還怕麻煩哈哈），所以就想做個網站讓我更方便選課與操作。",
-      p4: "99%的程式設計都是Cursor Agent完成的，詳見github repo。完全開源、不營利。",
-      p5: "除了用戶自選的健身影片連結，預設呈現的所有影片都是 Pamela 的 YouTube 教材。",
-      p6: "與 Pamela Reif 沒有官方關係。若你喜歡這些內容，請到 YouTube 支持她。",
+      rain: "Rain Liu",
+      pamela: "Pamela Reif",
+      github: "GitHub repo",
+      p1: "嗨，我是語仁 {rain}！",
+      p2: "開發這個網站是因為自己本身很喜歡看 {pamela} 的影片居家健身。但因為要反覆到電腦前面調整實在太麻煩了（明明是健身還怕麻煩哈哈），所以就想做個網站讓我更方便選課與操作。",
+      p3: "99%的程式設計都是Cursor Agent完成的，詳見{github}。完全開源、不營利。除了用戶自選的健身影片連結，預設呈現的所有影片都是 {pamela} 的 YouTube 教材。與 {pamela} 沒有官方關係。若你喜歡這些內容，請到 YouTube 支持她。",
     },
+
     yt: {
       blocked: "YouTube 禁止內嵌這支影片。",
       open: "在 YouTube 開啟{title}",
