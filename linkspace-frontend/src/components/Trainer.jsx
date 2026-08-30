@@ -12,6 +12,7 @@ export default function Trainer({ slug, title, youtubeId, defaultLayout = "stand
   const playerRef = useRef(null);
   const rafRef = useRef(0);
   const liveRef = useRef(false);
+  const holdRef = useRef({ name: null, count: 0 });
   const cooldownRef = useRef(0);
   const [layout, setLayout] = useState(defaultLayout);
   const [live, setLive] = useState(false);
@@ -39,8 +40,21 @@ export default function Trainer({ slug, title, youtubeId, defaultLayout = "stand
     }
     try {
       const next = await detectGesture(video);
-      if (next && Date.now() > cooldownRef.current) {
-        cooldownRef.current = Date.now() + 1400;
+      if (!next) {
+        holdRef.current = { name: null, count: 0 };
+      } else if (holdRef.current.name === next) {
+        holdRef.current.count += 1;
+      } else {
+        holdRef.current = { name: next, count: 1 };
+      }
+      const needed = next === "pause" ? 8 : 3;
+      if (
+        next &&
+        holdRef.current.count >= needed &&
+        Date.now() > cooldownRef.current
+      ) {
+        cooldownRef.current = Date.now() + (next === "pause" ? 2000 : 1400);
+        holdRef.current = { name: null, count: 0 };
         applyGesture(next);
       }
     } catch {

@@ -21,7 +21,7 @@ export const copy = {
     home: {
       eyebrow: "linksparks",
       title: "Train with Pamela",
-      lede: "Gestures can pause, play, switch the layout, and rewind 10 seconds.",
+      lede: "Gestures: timeout T pauses, thumbs up plays, peace switches layout, thumbs down or point up rewinds 10 seconds.",
       browse: "Browse Pamela workouts",
       guide: "How to use",
       paste: "Paste a YouTube link",
@@ -133,7 +133,7 @@ export const copy = {
       standing: "Standing · left / right",
       mat: "Mat · top / bottom",
       legend:
-        "Open palm pause · thumbs up play · peace switch layout · thumbs down or point up rewind 10s",
+        "T-sign pause · thumbs up play · peace switch layout · thumbs down or point up rewind 10s",
       last: "last: {g}",
       end: "End session",
       you: "You",
@@ -156,9 +156,10 @@ export const copy = {
     },
     guide: {
       title: "How to use",
-      lede: "Stand in the camera so your hand is clearly visible. Hold one gesture for a moment — the same hand should not fire twice within about a second.",
+      lede: "Hold each gesture for a moment. Pause uses both hands in a T (timeout) so a natural open palm will not stop the video.",
       pauseName: "Pause",
-      pauseHow: "Open palm, facing the camera.",
+      pauseHow:
+        "Timeout T: one hand flat and horizontal, the other vertical and touching its center. Hold until it registers.",
       playName: "Play",
       playHow: "Thumbs up.",
       switchName: "Switch layout",
@@ -168,7 +169,7 @@ export const copy = {
       rewindHow: "Thumbs down or point up. The video jumps back ten seconds.",
       tipTitle: "Tips",
       tip1: "Allow the camera when the browser asks. The mirror stays on this device.",
-      tip2: "One hand at a time works more reliably than two.",
+      tip2: "Pause needs two hands. Play, switch, and rewind work with one hand.",
       tip3: "If a YouTube video will not embed, pick a Pamela session from Train.",
     },
     about: {
@@ -203,7 +204,7 @@ export const copy = {
     home: {
       eyebrow: "linksparks",
       title: "跟 Pamela 一起練",
-      lede: "手勢可暫停、播放、切換版面、倒帶10秒。",
+      lede: "手勢：雙手T字暫停、豎拇指播放、切換版面、倒帶10秒。",
       browse: "瀏覽 Pamela 課表",
       guide: "使用教學",
       paste: "貼上 YouTube 連結",
@@ -304,7 +305,7 @@ export const copy = {
       standing: "站姿 · 左／右",
       mat: "墊上 · 上／下",
       legend:
-        "張開手掌暫停 · 豎拇指播放 · 勝利手勢Ｖ切換版面 · 拇指朝下或食指朝上倒帶10秒",
+        "雙手 T 字暫停 · 豎拇指播放 · 勝利手勢Ｖ切換版面 · 拇指朝下或食指朝上倒帶10秒",
       last: "剛才：{g}",
       end: "結束這堂課",
       you: "你",
@@ -327,9 +328,10 @@ export const copy = {
     },
     guide: {
       title: "使用教學",
-      lede: "站在鏡頭前，讓手掌清楚入鏡。比出一個手勢並稍停一下；同一隻手大約一秒內不會連續觸發兩次。",
+      lede: "每個手勢請稍停一下。暫停改為雙手「時鐘暫停」T 字，自然張開手掌不會停片。",
       pauseName: "暫停",
-      pauseHow: "張開手掌，掌心朝向鏡頭。",
+      pauseHow:
+        "時鐘暫停（T 字）：一隻手水平放平，另一隻手垂直頂住其中心，比出 T。停住直到系統辨識。",
       playName: "播放",
       playHow: "豎起拇指（讚）。",
       switchName: "切換版面",
@@ -339,7 +341,7 @@ export const copy = {
       rewindHow: "拇指朝下，或食指朝上。影片會往回跳十秒。",
       tipTitle: "小提示",
       tip1: "瀏覽器詢問鏡頭時請允許。鏡子畫面只留在這台裝置。",
-      tip2: "一次一隻手，比兩隻手同時比劃更穩。",
+      tip2: "暫停要用雙手 T 字。播放、切換、倒帶仍是單手。",
       tip3: "若 YouTube 禁止內嵌，請改從訓練頁選 Pamela 課表。",
     },
     about: {
